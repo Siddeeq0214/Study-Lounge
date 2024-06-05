@@ -7,11 +7,11 @@ import '@stream-io/video-react-sdk/dist/css/styles.css';
 export const ThemeContext = createContext((_themeName: string): void => {});
 
 const ThemeProviderWrapper: FC = (props) => {
-  const [themeName, _setThemeName] = useState('DarkSpacesTheme');
+  const [themeName, _setThemeName] = useState('NebulaFighterTheme');
 
   useEffect(() => {
     const curThemeName =
-      window.localStorage.getItem('appTheme') || 'DarkSpacesTheme';
+      window.localStorage.getItem('appTheme') || 'NebulaFighterTheme';
     _setThemeName(curThemeName);
   }, []);
 

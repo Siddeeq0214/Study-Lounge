@@ -221,7 +221,7 @@ const useStudentAppUser = () => {
       let loginUser = await signInWithEmailAndPassword(formData.email, formData.password)
       if (loginUser){
         setAppUserSubmitMsg("Successfully logged in!")
-        await router.push(`/profile`)
+        await router.push(`/studyroom`)
       } else {
         setAppUserSubmitMsg("error logging in -> invalid creds")
       }
@@ -231,7 +231,7 @@ const useStudentAppUser = () => {
     // if it works, redirect to profile page, else, throw error, prolly in toast
     setAppUserSubmitMsg("Successfully logged in!")
     setAppUserLoading(false);
-    await router.push(`/profile`)
+    await router.push(`/studyroom`)
   }
 
   const forgotPassword = async (email: string): Promise<void> => {
