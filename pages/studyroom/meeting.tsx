@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CircularProgress, Container } from '@mui/material';
+import { CircularProgress, Container, Box, Button } from '@mui/material';
 import {
     CallingState,
     StreamCall,
@@ -12,8 +12,10 @@ import {
     ParticipantView,
     StreamVideoParticipant,
     CallControls,
-    SpeakerLayout
+    SpeakerLayout,
+    CallParticipantsList
 } from '@stream-io/video-react-sdk';
+import { AudioVolumeIndicator } from '@/components/StudyRoomUI/VolumeIndicator';
 import useGetStream from "@/hooks/useGetStream";
 import { useRouter } from "next/router";
 
@@ -60,6 +62,11 @@ const MyUILayout = () => {
     const callingState = useCallCallingState();
     const localParticipant = useLocalParticipant();
     const remoteParticipants = useRemoteParticipants();
+    const [showParticipantsList, setShowParticipantsList] = useState(false);
+
+    const handleToggleParticipantsList = () => {
+        setShowParticipantsList(prevState => !prevState);
+    }
 
     if (callingState !== CallingState.JOINED) {
         return <CircularProgress />;
@@ -67,10 +74,25 @@ const MyUILayout = () => {
 
     return (
         <StreamTheme>
-            <SpeakerLayout participantsBarPosition="bottom" />
+            <Box sx={{ display: 'flex', flexGrow: 1, height: '100vh' }}>
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <Box sx={{ flex: 1 }}>
+                        <SpeakerLayout participantsBarPosition="bottom" />
+                    </Box>
+                    <CallControls />
+                    <AudioVolumeIndicator />
+                </Box>
+                <Box sx={{ width: '300px', marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
+                    <Button onClick={handleToggleParticipantsList} variant="contained" color="primary">
+                        Toggle Participants List
+                    </Button>
+                    {showParticipantsList && (
+                        <CallParticipantsList onClose={handleToggleParticipantsList} />
+                    )}
+                </Box>
+            </Box>
             {/*<MyParticipantList participants={remoteParticipants} />*/}
             {/*<MyFloatingLocalParticipant participant={localParticipant} />*/}
-            <CallControls />
         </StreamTheme>
     );
 };
