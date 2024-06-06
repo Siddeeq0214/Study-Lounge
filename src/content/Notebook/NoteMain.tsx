@@ -1,10 +1,11 @@
 // NoteMain.tsx
 import React, { ChangeEvent, useCallback, useRef } from "react";
 import { Note } from "@/atoms/noteAtom";
-import { TextField, Grid } from "@mui/material";
+import { TextField, Grid, Button } from "@mui/material";
+import jsPDF from "jspdf";
 
 interface NoteMainProps {
-  activeNote: Note | string | null; // Adjusted type definition
+  activeNote: Note  | null; // Adjusted type definition
   onUpdateNote: (updatedNote: Note) => void;
 }
 
@@ -25,6 +26,34 @@ const NoteMain: React.FC<NoteMainProps> = ({ activeNote, onUpdateNote }) => {
     [activeNote, onUpdateNote]
   );
 
+  const handleDownloadPDF = () => {
+    if (!activeNote) return;
+
+    const doc = new jsPDF();
+    doc.setFontSize(20);
+    doc.text(activeNote.title, 10, 10);
+    doc.setFontSize(12);
+    doc.text(activeNote.body, 10, 20);
+    doc.save(`${activeNote.title || "note"}.pdf`);
+  };
+
+  const handleDownloadText = () => {
+    if (!activeNote) return;
+
+    const noteContent = `Title: ${activeNote.title}\n\n${activeNote.body}`;
+    const blob = new Blob([noteContent], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${activeNote.title || "note"}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+  };
+
   if (!activeNote) return null;
 
   return (
@@ -34,7 +63,7 @@ const NoteMain: React.FC<NoteMainProps> = ({ activeNote, onUpdateNote }) => {
           label="Title"
           fullWidth
           inputRef={titleRef}
-          value={typeof activeNote !== "string" ? activeNote.title : ""}
+          value={activeNote.title}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onEditField("title", e.target.value)
           }
@@ -47,11 +76,23 @@ const NoteMain: React.FC<NoteMainProps> = ({ activeNote, onUpdateNote }) => {
           variant="outlined"
           fullWidth
           inputRef={bodyRef}
-          value={typeof activeNote !== "string" ? activeNote.body : ""}
+          value={activeNote.body}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             onEditField("body", e.target.value)
           }
         />
+      </Grid>
+      <Grid item xs={12} container spacing={2}>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={handleDownloadPDF}>
+            Download Note as PDF
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={handleDownloadText}>
+            Download Note as Text
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );
