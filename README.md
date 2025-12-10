@@ -1,17 +1,5 @@
 # Study-Lounge-UTT
 
-Getting Started
-
-Prerequisites
-
-Installation
-
-Usage
-
-Testing
-
-Overview
-
 Study-Lounge is a collaborative learning platform designed to help students stay organized, share study resources, manage tasks, and improve productivity. Built with modern web technologies, it offers a seamless and intuitive study experience.
 
 Getting Started
