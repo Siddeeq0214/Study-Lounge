@@ -27,7 +27,6 @@ Using npm:
 
 npm install
 
-Usage
 
 Run the project with:
 
