@@ -1,37 +1,4 @@
 # Study-Lounge-UTT
-Built With
-
-Study-Lounge is powered by the following tools and technologies:
-
-JSON
-
-Markdown
-
-NPM
-
-Firebase
-
-Prettier
-
-JavaScript
-
-React
-
-TypeScript
-
-Recoil
-
-ESLint
-
-date-fns
-
-React Hook Form
-
-Styled-Components
-
-Table of Contents
-
-Overview
 
 Getting Started
 
@@ -76,19 +43,7 @@ Usage
 
 Run the project with:
 
-npm start
+npm run dev
 
 
 This will start the development server and open the app in your browser.
-
-Testing
-
-Study-Lounge uses a test framework (replace with Jest/React Testing Library/etc. if applicable).
-Run the full test suite with:
-
-npm test
-
-License
-
-This project is licensed under the MIT License.
-Feel free to modify and enhance as needed.
